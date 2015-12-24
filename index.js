@@ -8,9 +8,7 @@ module.exports = function (port, host) {
 
 	var broker = new EventEmitter();
 
-	subClient.on('message', function (channel, message) {
-		broker.emit('message', channel, message);
-	});
+	subClient.on('message', broker.emit.bind(broker, 'message'));
 
 	broker.subscribe = subClient.subscribe.bind(subClient);
 	broker.unsubscribe = subClient.unsubscribe.bind(subClient);
